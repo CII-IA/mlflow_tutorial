@@ -31,7 +31,11 @@ Es importante mencionar, que existen varias herramientas que por separado nos pu
 ### Ejemplo 1: Entrenando y desplegando un regresor lineal
 
 Vamos a revisar un ejemplo completo de uso de MLFlow de principio a fin:
-* Entrenaremos un regresor lineal.
-* Empaquetaremos el código que entrena el modelo en una forma reutilizable.
-* Desplegaremos el modelo como un servidor simple HTTP que se podrá usar para inferir predicciones.
+* Entrenaremos un regresor lineal (```python ejemplo1_elasticnet_wine\train.py```).
+* Podemos revisar el desempeño del modelo ejecutando ``mlflow ui``. 
+* Empaquetaremos el código que entrena el modelo en una forma reutilizable aprovechando el módulo de Projects de MLFlow (archivo: MLproject).
+* Desplegaremos el modelo como un servidor simple HTTP que se podrá usar para inferir predicciones (``mlflow models -m <enlace al modelo como aparece en mlflowui> -p <puerto>``). Esto nos creará todo el ambiente necesario para utilizarlo a través de un servidor HTTP sencillo.
+* Mandaremos datos para ejecutar una predicción:
+- ``curl.exe -X POST -H "Content-Type:application/json" --data '{"columns":["alcohol", "chlorides", "citric acid", "density", "fixed acidity", "free sulfur dioxide", "pH", "residual sugar", "sulphates", "total sulfur dioxide", "volatile acidity"],"data":[[12.8, 0.029, 0.48, 0.98, 6.2, 29, 3.33, 1.2, 0.39, 75, 0.66]]}' http://127.0.0.1:1234/invocations``
+* Podemos volver a activar el servidor con: ``conda activate mlflow-ffcb2c5031964a28ac387f0ae92502be7ea9a383 & waitress-serve --host=127.0.0.1 --port=1234 --ident=mlflow mlflow.pyfunc.scoring_server.wsgi:app``
 
