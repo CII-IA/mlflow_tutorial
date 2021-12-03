@@ -125,8 +125,8 @@ def run(training_data, epochs, batch_size, learning_rate, momentum, seed):
     train_x = train.drop(["quality"], axis=1).as_matrix()
     train_x = (train_x).astype("float32")
     train_y = train[["quality"]].as_matrix().astype("float32")
+    
     valid_x = (valid.drop(["quality"], axis=1).as_matrix()).astype("float32")
-
     valid_y = valid[["quality"]].as_matrix().astype("float32")
 
     test_x = (test.drop(["quality"], axis=1).as_matrix()).astype("float32")
